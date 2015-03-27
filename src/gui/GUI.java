@@ -5,10 +5,12 @@ package gui;
  */
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.GridLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -22,8 +24,11 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSpinner;
 import javax.swing.JTextArea;
+import javax.swing.JTextField;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.border.EmptyBorder;
+import javax.swing.border.LineBorder;
+import javax.swing.border.TitledBorder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
@@ -43,7 +48,10 @@ public class GUI extends JFrame implements ActionListener, taxisView {
 	JPanel northPanel = new JPanel();
 	JPanel centerPanel = new JPanel();
 	JPanel southPanel = new JPanel();
+	JPanel eastPanel = new JPanel();
+	JPanel westPanel = new JPanel();
 
+	
 	// Declaration of instance variables of Menu Panel
 	JLabel workersCountL;
 	JSpinner workersCountS;
@@ -66,6 +74,22 @@ public class GUI extends JFrame implements ActionListener, taxisView {
 	JButton startButton;
 	JButton stopButton;
 	JLabel taxisLogo;
+	
+	// Declaration of instance variables of West Panel
+    JButton submit;
+    JLabel entryHeader;
+    JLabel passengers;
+	JLabel destinationsLabel;
+	JTextField passengersText;
+	JTextField destinationsText;
+	
+	
+	// Declaration of instance variables of East Panel
+	JLabel speedLabel;
+	JSpinner speedHandler;
+	JLabel extraWorkersLabel;
+	JSpinner extraWorkers;
+	
 
 	public void initializations()
 
@@ -86,6 +110,8 @@ public class GUI extends JFrame implements ActionListener, taxisView {
 		setUpNorthPanel();
 		setUpCenterPanel();
 		setUpSouthPanel();
+		setUpWestPanel();
+		setUpEastPanel();
 
 		
 		/*
@@ -264,7 +290,126 @@ public class GUI extends JFrame implements ActionListener, taxisView {
 		add(southPanel, BorderLayout.SOUTH);
 
 	}
+	
+	
+	
+public void setUpWestPanel() {
+		
 
+		/*
+		 * All components of westPanel initialized and some different attributes
+		 * for each element have been given
+		 */
+		JPanel topPanel = new JPanel(new FlowLayout());
+		JPanel bottomPanel = new JPanel(new FlowLayout());
+		JPanel centerPanel = new JPanel(new GridLayout(0,2,5,6));
+		JPanel groupPanel  =new JPanel(new GridBagLayout());
+		
+		
+		westPanel.setLayout(new GridBagLayout());
+		westPanel.setBorder(new TitledBorder(new LineBorder(Color.black, 2),
+		"New Entry"));
+
+		entryHeader = new JLabel("Please Enter New Details");
+
+		passengers = new JLabel("No of Passengers");
+		passengersText = new JTextField();
+		passengersText.setPreferredSize(new Dimension(10,2));
+
+		destinationsLabel = new JLabel("Destination");
+		destinationsText = new JTextField();
+
+		submit = new JButton("Submit Details");
+		submit.addActionListener(this);
+
+		
+		//All the sub-panels added to the main panel
+	
+		topPanel.add(entryHeader);
+		centerPanel.add(passengers);
+		centerPanel.add(passengersText);
+		centerPanel.add(destinationsLabel);
+		centerPanel.add(destinationsText);	
+		bottomPanel.add(submit);
+
+		GridBagConstraints c = new GridBagConstraints();
+        GridBagConstraints d = new GridBagConstraints();
+		
+		/*
+		 * Sets the values (1,10,10,1) on the GridBagConstraints object created
+		 * above.The values define the distance(top,left,right,bottom) which
+		 * will have the elements of the panel between them and the position on the panel.
+		 */
+		c.insets = new Insets(1, 10, 10, 1);
+		c.gridx = 0;
+		c.gridy = 1;
+		westPanel.add(topPanel, c);
+		c.gridx = 0;
+		c.gridy = 2;
+		westPanel.add(centerPanel, c);
+		c.gridx = 0;
+		c.gridy = 3;
+		westPanel.add(bottomPanel, c);
+		
+		
+		d.insets = new Insets(1, 1, 1, 1);
+		d.gridx = 0;
+		d.gridy = 1;
+		groupPanel.add(westPanel,d);
+
+
+		// Adds groupPanel to the WEST layout of the window
+		this.add(groupPanel, BorderLayout.WEST);		
+	
+	}
+	
+	
+	
+	public void setUpEastPanel() {
+	
+
+		/*
+		 * All elements of eastPanel initialized 
+		 */
+		
+		eastPanel.setLayout(new GridLayout(2,1,5,10));
+		JPanel backPanel = new JPanel(new GridBagLayout());
+		
+		speedLabel = new JLabel("Speed Modification");
+		speedHandler = new JSpinner();
+		JLabel extraWorkersLabel= new JLabel("Workers Addition");
+		extraWorkersLabel.setPreferredSize(new Dimension(3,4));
+		JSpinner extraWorkers=new JSpinner();
+		
+		eastPanel.add(speedLabel);
+		eastPanel.add(speedHandler);
+		eastPanel.add(extraWorkersLabel);
+		eastPanel.add(extraWorkers);
+
+
+		GridBagConstraints b = new GridBagConstraints();
+
+		
+		/*
+		 * Sets the values (1,10,10,1) on the GridBagConstraints object created
+		 * above.The values define the distance(top,left,right,bottom) which
+		 * will have the elements of the panel between them.Then the gridx and gridy
+		 * puts the element on a specific position on the panel.
+		 */
+		b.insets = new Insets(1, 10, 10, 1);
+		b.gridx = 0;
+		b.gridy = 1;
+		backPanel.add(eastPanel,b);
+		
+	
+		// Adds groupPanel to the EAST layout of the window
+		add(backPanel ,BorderLayout.EAST);
+		
+		
+	}
+
+	
+	
 	
 	/*
 	 * Depending which button is pressed every time an action takes place
