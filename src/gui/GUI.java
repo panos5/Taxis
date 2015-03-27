@@ -38,6 +38,10 @@ import core.taxisView;
 
 @SuppressWarnings("serial")
 public class GUI extends JFrame implements ActionListener, taxisView {
+	
+	public static String Destination;
+	public static int NoPassengers;
+	public static boolean NewEntry;
 
 	taxisController controller;
 	public GUI(taxisModel model) {
@@ -429,6 +433,13 @@ public void setUpWestPanel() {
 		{
 			controller.terminateExecution();
 
+		}
+		
+if (e.getSource() == submit){
+			
+			NoPassengers = Integer.parseInt(passengersText.getText());
+			Destination = destinationsText.getText();
+			NewEntry = true;
 		}
 
 	}
