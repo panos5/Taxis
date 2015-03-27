@@ -1,7 +1,7 @@
 package core;
 /**
  * 
- * @author marinaki
+ * @author panos
  *
  */
 // Used to receive any broadcast of changes in the model data
