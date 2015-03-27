@@ -1,5 +1,5 @@
 /**
- * @author: marinaki
+ * @author: marina
  */
 
 package gui;

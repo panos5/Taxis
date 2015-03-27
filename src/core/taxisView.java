@@ -1,6 +1,6 @@
 /**
  * 
- * @author marinaki
+ * @author marina
  *
  */
 

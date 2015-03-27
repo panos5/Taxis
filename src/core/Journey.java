@@ -1,9 +1,11 @@
-package core;
 /**
  * 
- * @author marinaki
+ * @author marina
  *
  */
+
+package core;
+
 public class Journey {
 	
 	private int sequence_id;

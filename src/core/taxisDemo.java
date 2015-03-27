@@ -1,15 +1,14 @@
+/**
+ * 
+ * @author marina
+ *
+ */
+
 package core;
 
 import gui.GUI;
 
 import java.io.File;
-
-/**
- * 
- * @author marinaki
- *
- */
-
 
 public class taxisDemo {
 	public static void main(String args[]) {

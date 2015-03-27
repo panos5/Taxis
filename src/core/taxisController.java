@@ -1,13 +1,13 @@
+/**
+ * 
+ * @author marina
+ *
+ */
+
 package core;
 import gui.GUI;
 
 import java.util.Vector;
-
-/**
- * 
- * @author marinaki
- *
- */
 
 //--> why Runnable???
 //==> instances of this class (taxisController) can be run non threads 

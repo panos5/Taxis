@@ -1,9 +1,10 @@
-package core;
 /**
  * 
- * @author marinaki
+ * @author marina
  *
  */
+package core;
+
 public class Taxi {
 	private String id;
 	private int sequence_id;
