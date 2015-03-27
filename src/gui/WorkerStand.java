@@ -1,5 +1,7 @@
 /**
- * @author: marinaki
+ * 
+ * @author Goupiou Marina
+ *
  */
 
 package gui;

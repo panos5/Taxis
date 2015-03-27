@@ -1,3 +1,9 @@
+/**
+ * 
+ * @author Goupiou Marina
+ *
+ */
+
 package core;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
@@ -5,11 +11,6 @@ import java.io.IOException;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
-/**
- * 
- * @author marinaki
- *
- */
 public class Logger {
 	private String logFile;
 	private Lock filelock;

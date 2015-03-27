@@ -1,11 +1,11 @@
-package core;
-import java.util.Vector;
-
 /**
  * 
- * @author marinaki
+ * @author Goupiou Marina
  *
  */
+
+package core;
+import java.util.Vector;
 
 //--> why Runnable???
 //==> instances of this class (taxisController) can be run non threads 

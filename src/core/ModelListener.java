@@ -1,9 +1,11 @@
-package core;
 /**
  * 
- * @author marinaki
+ * @author Goupiou Marina
  *
  */
+
+package core;
+
 // Used to receive any broadcast of changes in the model data
 public interface ModelListener {
 	//called by the model when a paired Journey occurs

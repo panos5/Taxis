@@ -1,12 +1,14 @@
+/**
+ * 
+ * @author Goupiou Marina
+ *
+ */
+
 package core;
 import java.util.Vector;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
-/**
- * 
- * @author marinaki
- *
- */
+
 public class taxisModel {
 	private Vector<ModelListener> listeners;
 	

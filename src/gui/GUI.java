@@ -1,8 +1,10 @@
 package gui;
 
 /**
- * marina, panagiotis
+ * @authors: Filiotis Panagiotis: Graphical Part 
+ *           Goupiou Marina: User Interface Part (connections, etc)
  */
+
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
