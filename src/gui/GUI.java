@@ -39,6 +39,10 @@ import core.taxisView;
 @SuppressWarnings("serial")
 public class GUI extends JFrame implements ActionListener, taxisView {
 
+	public static String Destination;
+	public static int NoPassengers;
+	public static boolean NewEntry;
+	
 	taxisController controller;
 	public GUI(taxisModel model) {
 		model.addModelListener(this);
@@ -80,7 +84,7 @@ public class GUI extends JFrame implements ActionListener, taxisView {
     JLabel entryHeader;
     JLabel passengers;
 	JLabel destinationsLabel;
-	JTextField passengersText;
+	JTextField  passengersText;
 	JTextField destinationsText;
 	
 	
@@ -315,10 +319,10 @@ public void setUpWestPanel() {
 		passengers = new JLabel("No of Passengers");
 		passengersText = new JTextField();
 		passengersText.setPreferredSize(new Dimension(10,2));
-
 		destinationsLabel = new JLabel("Destination");
 		destinationsText = new JTextField();
 
+		
 		submit = new JButton("Submit Details");
 		submit.addActionListener(this);
 
@@ -385,7 +389,7 @@ public void setUpWestPanel() {
 		eastPanel.add(speedHandler);
 		eastPanel.add(extraWorkersLabel);
 		eastPanel.add(extraWorkers);
-
+		
 
 		GridBagConstraints b = new GridBagConstraints();
 
@@ -429,6 +433,13 @@ public void setUpWestPanel() {
 		{
 			controller.terminateExecution();
 
+		}
+		
+		if (e.getSource() == submit){
+			
+			NoPassengers = Integer.parseInt(passengersText.getText());
+			Destination = destinationsText.getText();
+			NewEntry = true;
 		}
 
 	}

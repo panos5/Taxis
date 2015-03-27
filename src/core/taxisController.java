@@ -1,4 +1,7 @@
 package core;
+import gui.GUI;
+
+import java.util.Set;
 import java.util.Vector;
 
 /**
@@ -147,6 +150,10 @@ public class taxisController implements Runnable, ModelListener {
 			//show and log the results
 			Logger.getInstance().log(s.replace('\1', ' ')); // make the log one line
 			view.setWorkerCurrentItem(workerID, s.replace('\1', '\n')); //make the log 4 lines
+			if ( GUI.NoPassengers !=0 && !(GUI.Destination.isEmpty()) && GUI.NewEntry == true){
+				model.addJourney(new Journey(100,GUI.Destination,GUI.NoPassengers));
+				GUI.NewEntry = false;
+			}
 		}
 	}
 
