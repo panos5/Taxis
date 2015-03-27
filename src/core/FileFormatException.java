@@ -8,6 +8,8 @@ package core;
  * used when a file was not formated correctly
  *
  */
+
+// FileFormatException
 public class FileFormatException extends Exception {
 	
 	private static final long serialVersionUID = 1L;
