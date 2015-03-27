@@ -1,0 +1,15 @@
+Runetera,3
+Terrordale,2
+Kharazan,4
+Ahn'Qiraj,1
+Orgrimmar,2
+Stormwind,1
+Tommorowland,5
+Gotham,3
+Winterspring,3
+Dalaran,4
+Anfield,2
+Silvermoon,3
+OldTrafford,5
+Ratchet,3
+Glastonbury,2
