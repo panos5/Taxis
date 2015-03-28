@@ -1,0 +1,4 @@
+extension: "more massenger groups can join the queue as the simulation progresses "
+if you cannot make it work by typing the name of group along with the number of passengers, 
+i have already the code in the controller (journeyload) with which you can select a file (a new one) with the passengers groups.
+in this case the only that is missing is a button and the 'connection'
