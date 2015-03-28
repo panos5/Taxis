@@ -12,22 +12,29 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.Insets;
+import java.awt.ScrollPane;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Vector;
 
 import javax.swing.BorderFactory;
+import javax.swing.GroupLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollBar;
+import javax.swing.JScrollPane;
 import javax.swing.JSpinner;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.ScrollPaneConstants;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.border.EmptyBorder;
+import javax.swing.border.EtchedBorder;
 import javax.swing.border.LineBorder;
+import javax.swing.border.SoftBevelBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
@@ -42,11 +49,9 @@ public class GUI extends JFrame implements ActionListener, taxisView {
 	public static String Destination;
 	public static int NoPassengers;
 	public static boolean NewEntry;
-
-	taxisController controller;
-	public GUI(taxisModel model) {
-		model.addModelListener(this);
-	}
+   taxisController controller;
+	
+	
 	// Declaration of instance variables of panels
 	JPanel menuPanel = new JPanel();
 	JPanel northPanel = new JPanel();
@@ -73,11 +78,15 @@ public class GUI extends JFrame implements ActionListener, taxisView {
 	JLabel taxisCounter;
 	JTextArea taxisQueue;
 	JTextArea passengersQueue;
+	JScrollPane taxisScroll;
+	JScrollPane passengersScroll;
 
+	
 	// Declaration of instance variables of South Panel
 	JButton startButton;
 	JButton stopButton;
 	JLabel taxisLogo;
+	
 	
 	// Declaration of instance variables of West Panel
     JButton submit;
@@ -94,7 +103,13 @@ public class GUI extends JFrame implements ActionListener, taxisView {
 	JLabel extraWorkersLabel;
 	JSpinner extraWorkers;
 	
-
+	
+	public GUI(taxisModel model) {
+		
+	     model.addModelListener(this);
+		}
+	
+	
 	public void initializations()
 
 	{
@@ -103,14 +118,13 @@ public class GUI extends JFrame implements ActionListener, taxisView {
 
 		
 		/*
-		 * When the close button on the upper right corner of thewindow is
+		 * When the close button on the upper right corner of the window is
 		 * pressed the window closes
 		 */
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		
 		// Call methods for initialization
-		setUpMenuPanel();
 		setUpNorthPanel();
 		setUpCenterPanel();
 		setUpSouthPanel();
@@ -129,6 +143,7 @@ public class GUI extends JFrame implements ActionListener, taxisView {
 
 	}
 
+	
 
 	public void addWorkerStand(String name) {
 		WorkerStand stand = new WorkerStand(name);
@@ -136,47 +151,10 @@ public class GUI extends JFrame implements ActionListener, taxisView {
 		northPanel.add(stand);
 	}
 	
-	public void setUpMenuPanel() {
-		workersCountL = new JLabel("Workers count:");
-		menuPanel.add(workersCountL);
-		workersCountS = new JSpinner(new SpinnerNumberModel(controller.getWorkersCount(), 0, 100, 1));
-
-		workersCountS.addChangeListener( new ChangeListener() {
-			//@Override
-			public void stateChanged(ChangeEvent arg0) {
-				int diff = ((Integer)workersCountS.getValue()) - controller.getWorkersCount();
-				if(diff>0) {// add stuff
-					controller.setWorkersCount((Integer)workersCountS.getValue());
-					for(int i=0; i<diff; i++)
-						addWorkerStand("WORKER " + (controller.getWorkersCount() + 1));
-				} else if(diff<0) {//remove stuff
-					controller.setWorkersCount((Integer)workersCountS.getValue());
-					for(int i=0; i<-diff; i++) {
-						northPanel.remove(stands.get(stands.size()-1));
-						stands.remove(stands.size()-1);
-					}
-				}
-				//refresh
-				northPanel.revalidate();
-				revalidate();
-				//else do nothing
-			}
-			
-		});
-		menuPanel.add(workersCountS);
-		timerCountL = new JLabel("TImer ticks(ms):");
-		menuPanel.add(timerCountL);
-		timerCountS = new JSpinner(new SpinnerNumberModel(1000, 1000, 10000, 500));
-		timerCountS.addChangeListener(new ChangeListener() {
-			
-			//@Override
-			public void stateChanged(ChangeEvent e) {
-				controller.setTimerCount((Integer) timerCountS.getValue());
-			}
-		});
-		menuPanel.add(timerCountS);
-		northPanel.add(menuPanel);
-	}
+	
+	
+	
+	
 	public void setUpNorthPanel() {
 
 		/*
@@ -186,7 +164,7 @@ public class GUI extends JFrame implements ActionListener, taxisView {
 		 * panel
 		 */
 		northPanel.setBorder(new EmptyBorder(10, 15, 50, 15));
-		northPanel.setLayout(new GridBagLayout());
+		northPanel.setLayout(new FlowLayout());
 		
 		for(int i=0; i<controller.getWorkersCount(); i++)
 			this.addWorkerStand("WORKER " + (i + 1));
@@ -196,6 +174,7 @@ public class GUI extends JFrame implements ActionListener, taxisView {
 	}
 
 	
+	
 	public void setUpCenterPanel() {
 
 		/*
@@ -204,59 +183,80 @@ public class GUI extends JFrame implements ActionListener, taxisView {
 		 */
 		centerPanel.setLayout(new GridBagLayout());
 
+		
 		passengersLabel = new JLabel("Passengers waiting");
 		taxisLabel = new JLabel("Taxis available");
 
-		passengersCounter = new JLabel("3");
-		taxisCounter = new JLabel("5");
+		passengersCounter = new JLabel("");
+		taxisCounter = new JLabel("");
+		
 
-		taxisQueue = new JTextArea(18, 25);
+		taxisQueue = new JTextArea(15,13);
 		taxisQueue.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 14));
 		taxisQueue.setEditable(false);
 		taxisQueue.setBorder(BorderFactory.createLineBorder(Color.black));
+		
+		taxisScroll = new JScrollPane(taxisQueue);
 
+		
 		passengersQueue = new JTextArea(18, 25);
 		passengersQueue.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 14));
 		passengersQueue.setEditable(false);
 		passengersQueue.setBorder(BorderFactory.createLineBorder(Color.black));
+		
+		passengersScroll = new JScrollPane(passengersQueue);
+
 
 		
 		// Creates a GridBagConstraints object
 		GridBagConstraints c = new GridBagConstraints();
-
+         
 		
 		/*
 		 * Sets the values (3,5,,5,3) on the GridBagConstraints object created
-		 * abovewhich they define the distance(top,left,right,bottom) which will
-		 * havethe elements of the panel between them.
+		 * above which they define the distance(top,left,right,bottom) which
+		 * will have the elements of the panel between them.
 		 */
 		c.insets = new Insets(1, 10, 10, 1);
+
 		c.gridx = 0;
 		c.gridy = 0;
 		centerPanel.add(passengersLabel, c);
-		c.gridx = 0;
-		c.gridy = 1;
-		centerPanel.add(passengersCounter, c);
-		c.gridx = 0;
-		c.gridy = 2;
-		centerPanel.add(passengersQueue, c);
 
 		c.gridx = 1;
 		c.gridy = 0;
 		centerPanel.add(taxisLabel, c);
-		c.gridx = 1;
+
+		c.gridx = 0;
 		c.gridy = 1;
 		centerPanel.add(taxisCounter, c);
+
+		c.gridx = 1;
+		c.gridy = 1;
+		centerPanel.add(passengersCounter, c);
+		// c.fill=GridBagConstraints.HORIZONTAL;
+
+		c.fill = GridBagConstraints.VERTICAL;
+		c.ipady = 400;
+		c.ipadx = 200;
+		c.gridx = 0;
+		c.gridy = 2;
+		centerPanel.add(passengersScroll, c);
+
+		c.fill = GridBagConstraints.VERTICAL;
+		c.ipady = 400;
+		c.ipadx = 180;
 		c.gridx = 1;
 		c.gridy = 2;
-		centerPanel.add(taxisQueue, c);
-
+		centerPanel.add(taxisScroll, c);
 		
+	
 		// Adds centerPanel to the CENTER layout of the window
 		add(centerPanel, BorderLayout.CENTER);
 
 	}
 
+	
 	
 	public void setUpSouthPanel() {
 
@@ -266,8 +266,6 @@ public class GUI extends JFrame implements ActionListener, taxisView {
 		southPanel.setLayout(new FlowLayout());
 		startButton = new JButton("Start");
 		stopButton = new JButton("Stop");
-		taxisLogo = new JLabel(new ImageIcon(
-				"/Users/Panos/Documents/workspace/GUI/Icons/taxis.png"));
 
 		
 		/*
@@ -280,7 +278,6 @@ public class GUI extends JFrame implements ActionListener, taxisView {
 
 		
 		// All elements has been added to the southPanel
-		southPanel.add(taxisLogo);
 		southPanel.add(startButton);
 		southPanel.add(stopButton);
 		//southPanel.add(pauseButton);
@@ -297,7 +294,7 @@ public class GUI extends JFrame implements ActionListener, taxisView {
 	
 	
 	
-public void setUpWestPanel() {
+    public void setUpWestPanel() {
 		
 
 		/*
@@ -367,33 +364,67 @@ public void setUpWestPanel() {
 	
 	}
 	
-	
-	
+    
+
+
 	public void setUpEastPanel() {
 	
-
 		/*
 		 * All elements of eastPanel initialized 
 		 */
 		
 		eastPanel.setLayout(new GridLayout(2,1,5,10));
 		JPanel backPanel = new JPanel(new GridBagLayout());
+		eastPanel.setBorder(new SoftBevelBorder(SoftBevelBorder.RAISED));
+	   
 		
-		speedLabel = new JLabel("Speed Modification");
-		speedHandler = new JSpinner();
-		JLabel extraWorkersLabel= new JLabel("Workers Addition");
-		extraWorkersLabel.setPreferredSize(new Dimension(3,4));
-		JSpinner extraWorkers=new JSpinner();
+		speedLabel = new JLabel("Extra Workers");
+		speedHandler = new JSpinner(new SpinnerNumberModel(controller.getWorkersCount(), 0, 100, 1));
+		
+		speedHandler.addChangeListener( new ChangeListener() {
+		
+			
+			//@Override
+			public void stateChanged(ChangeEvent arg0) {
+				int diff = ((Integer)speedHandler.getValue()) - controller.getWorkersCount();
+				if(diff>0) {// add stuff
+					controller.setWorkersCount((Integer)speedHandler.getValue());
+					for(int i=0; i<diff; i++)
+						addWorkerStand("WORKER " + (controller.getWorkersCount() + 1));
+				} else if(diff<0) {//remove stuff
+					controller.setWorkersCount((Integer)speedHandler.getValue());
+					for(int i=0; i<-diff; i++) {
+						northPanel.remove(stands.get(stands.size()-1));
+						stands.remove(stands.size()-1);
+					}
+				}
+				//refresh
+				northPanel.revalidate();
+				revalidate();
+				//else do nothing
+			}
+			
+		});
 		
 		eastPanel.add(speedLabel);
 		eastPanel.add(speedHandler);
+		
+		JLabel extraWorkersLabel= new JLabel("Speed Modification");
 		eastPanel.add(extraWorkersLabel);
+		JSpinner extraWorkers=new JSpinner(new SpinnerNumberModel(1000, 1000, 10000, 500));
+		extraWorkers.addChangeListener(new ChangeListener() {
+			
+			//@Override
+			public void stateChanged(ChangeEvent e) {
+				controller.setTimerCount((Integer) extraWorkers.getValue());
+			}
+		});
+		
 		eastPanel.add(extraWorkers);
 
 
 		GridBagConstraints b = new GridBagConstraints();
-
-		
+	
 		/*
 		 * Sets the values (1,10,10,1) on the GridBagConstraints object created
 		 * above.The values define the distance(top,left,right,bottom) which
@@ -402,7 +433,7 @@ public void setUpWestPanel() {
 		 */
 		b.insets = new Insets(1, 10, 10, 1);
 		b.gridx = 0;
-		b.gridy = 1;
+		b.gridy = 0;
 		backPanel.add(eastPanel,b);
 		
 	
@@ -412,8 +443,7 @@ public void setUpWestPanel() {
 		
 	}
 
-	
-	
+
 	
 	/*
 	 * Depending which button is pressed every time an action takes place

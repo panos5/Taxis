@@ -18,7 +18,10 @@ public class WorkerStand extends JPanel {
 	private JLabel label;
 	private JTextArea textarea;
 	private JScrollPane scroll;
+	
+	
 	public WorkerStand(String name) {
+		
 		super(true);
 		this.setLayout(new BorderLayout());
 		label = new JLabel(name);
@@ -30,9 +33,13 @@ public class WorkerStand extends JPanel {
 		scroll.setSize(200, 100);
 		this.add(scroll, BorderLayout.CENTER);
 	}
+	
+	
 	public void addText(String text) {
 		textarea.setText(textarea.getText() + text);
 	}
+	
+	
 	public void setText(String text) {
 		textarea.setText(text);
 	}
