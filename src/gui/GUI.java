@@ -300,6 +300,7 @@ public class GUI extends JFrame implements ActionListener, taxisView {
     public void setUpWestPanel() {
 		
 
+    	
 		/*
 		 * All components of westPanel initialized and some different attributes
 		 * for each element have been given
@@ -539,9 +540,14 @@ public class GUI extends JFrame implements ActionListener, taxisView {
 			else
 
 			{
-
+				
 				NoPassengers = Integer.parseInt(passengersText.getText());
 				Destination = destinationsText.getText();
+				
+				
+				
+				if (NoPassengers > 0 && NoPassengers <=5 )
+				{
 				NewEntry = true;
 				JOptionPane.showMessageDialog(centerPanel,
 						"Registration completed.Thank you.A taxi will be with you soon!!");
@@ -549,7 +555,22 @@ public class GUI extends JFrame implements ActionListener, taxisView {
 				destinationsText.setText("");
 				passengersText.setBorder(BorderFactory.createLineBorder(Color.WHITE, 0));
 				destinationsText.setBorder(BorderFactory.createLineBorder(Color.WHITE, 0));
+				}
 				
+				else 
+				{
+					
+					JOptionPane.showMessageDialog(centerPanel,
+							"Please choose for passengers a value between 1-5",
+							"WARNING!!!!",
+							JOptionPane.WARNING_MESSAGE);
+					passengersText.setBorder(BorderFactory.createLineBorder(Color.RED, 2));
+					destinationsText.setBorder(BorderFactory.createLineBorder(Color.WHITE, 0));
+					
+					
+				}
+				
+
 
 			}
 
