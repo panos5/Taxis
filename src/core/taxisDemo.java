@@ -22,9 +22,9 @@ public class taxisDemo {
 		taxisModel model = new taxisModel();
         GUI view = new GUI(model);
 		taxisController controller = new taxisController(model, view);
-		controller.setWorkersCount(3);
-		controller.setTimerCount(1000);
-		view.setController(controller);
+		controller.setWorkersCount(3);   
+		controller.setTimerCount(1000);  
+		view.setController(controller);   
 		try {
 			//create the gui
 			view.initializations();

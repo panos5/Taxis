@@ -21,6 +21,7 @@ import javax.swing.BorderFactory;
 import javax.swing.GroupLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -40,6 +41,7 @@ import javax.swing.border.TitledBorder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
+import core.FileFormatException;
 import core.taxisController;
 import core.taxisModel;
 import core.taxisView;
@@ -372,7 +374,7 @@ public class GUI extends JFrame implements ActionListener, taxisView {
 		
 		filePanel.add(browseLabel);
 		filePanel.add(browseButton);
-		
+		browseButton.addActionListener(this);
 		
 		
 		d.insets = new Insets(1, 25, 25, 1);	
@@ -439,7 +441,7 @@ public class GUI extends JFrame implements ActionListener, taxisView {
 		
 		JLabel speedLabel= new JLabel("Speed Modification");
 		eastPanel.add(speedLabel);
-		JSpinner speedHandler=new JSpinner(new SpinnerNumberModel(1000, 1000, 10000, 1000));
+		final JSpinner speedHandler=new JSpinner(new SpinnerNumberModel(1000, 1000, 10000, 1000));
 		speedHandler.addChangeListener(new ChangeListener() {
 			
 			//@Override
@@ -598,6 +600,23 @@ public class GUI extends JFrame implements ActionListener, taxisView {
 
 			}
 
+		}
+		if (e.getSource() == browseButton) {
+			//create the open file dialog
+			JFileChooser fchooser = new JFileChooser();
+			int ret = fchooser.showOpenDialog(this);
+			if(ret == JFileChooser.APPROVE_OPTION) {
+				//the user has selected a file, ask the controller to load it
+				try {
+					controller.loadJourneyFile(fchooser.getSelectedFile().getPath());
+				} catch (FileFormatException e1) {
+					JOptionPane.showMessageDialog(centerPanel,
+							"Error attempting to load the specified file",
+							"WARNING!!!!",
+							JOptionPane.ERROR_MESSAGE);
+					e1.printStackTrace();
+				}
+			}
 		}
 
 	}
