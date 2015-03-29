@@ -96,6 +96,8 @@ public class GUI extends JFrame implements ActionListener, taxisView {
 	JLabel destinationsLabel;
 	JTextField passengersText;
 	JTextField destinationsText;
+	JButton browseButton;
+	JLabel browseLabel;
 	
 	
 	// Declaration of instance variables of East Panel
@@ -301,6 +303,8 @@ public class GUI extends JFrame implements ActionListener, taxisView {
 		
 
     	
+    	
+    	
 		/*
 		 * All components of westPanel initialized and some different attributes
 		 * for each element have been given
@@ -309,11 +313,19 @@ public class GUI extends JFrame implements ActionListener, taxisView {
 		JPanel bottomPanel = new JPanel(new FlowLayout());
 		JPanel centerPanel = new JPanel(new GridLayout(0,2,5,6));
 		JPanel groupPanel  =new JPanel(new GridBagLayout());
+		JPanel filePanel = new JPanel((new FlowLayout()));
 		
-		
+	
 		westPanel.setLayout(new GridBagLayout());
 		westPanel.setBorder(new TitledBorder(new LineBorder(Color.black, 2),
-		"New Entry"));
+		"New Entry Manually"));
+		
+		
+		filePanel.setBorder(new TitledBorder(new LineBorder(Color.black, 2),
+				"New Entry From File"));
+		browseButton= new JButton("Browse");
+		browseLabel = new JLabel("Please select a File:");
+		
 
 		entryHeader = new JLabel("Please Enter New Details");
 
@@ -357,14 +369,26 @@ public class GUI extends JFrame implements ActionListener, taxisView {
 		westPanel.add(bottomPanel, c);
 		
 		
-		d.insets = new Insets(1, 1, 1, 1);
+		
+		filePanel.add(browseLabel);
+		filePanel.add(browseButton);
+		
+		
+		
+		d.insets = new Insets(1, 25, 25, 1);	
 		d.gridx = 0;
 		d.gridy = 1;
 		groupPanel.add(westPanel,d);
-
-
+		d.gridx = 0;
+		d.gridy = 2;
+		groupPanel.add(filePanel,d);
+		
+		
 		// Adds groupPanel to the WEST layout of the window
-		this.add(groupPanel, BorderLayout.WEST);		
+		this.add(groupPanel, BorderLayout.WEST);	
+		
+		
+		
 	
 	}
 	
@@ -377,7 +401,7 @@ public class GUI extends JFrame implements ActionListener, taxisView {
 		 * All elements of eastPanel initialized 
 		 */
 		
-		eastPanel.setLayout(new GridLayout(2,1,5,10));
+		eastPanel.setLayout(new GridLayout(2,10,25,30));
 		JPanel backPanel = new JPanel(new GridBagLayout());
 		eastPanel.setBorder(new SoftBevelBorder(SoftBevelBorder.RAISED));
 	   
