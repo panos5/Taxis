@@ -7,7 +7,11 @@
 package core;
 import gui.GUI;
 
+import java.awt.Frame;
 import java.util.Vector;
+
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 //--> why Runnable???
 //==> instances of this class (taxisController) can be run non threads 
@@ -146,13 +150,20 @@ public class taxisController implements Runnable, ModelListener {
 			} else {//t == null
 				s = "W" + workerID + ": No more taxis";
 			}
+			
+			
 			//show and log the results
 			Logger.getInstance().log(s.replace('\1', ' ')); // make the log one line
 			view.setWorkerCurrentItem(workerID, s.replace('\1', '\n')); //make the log 4 lines
+
+			
 			if ( GUI.NoPassengers !=0 && !(GUI.Destination.isEmpty()) && GUI.NewEntry == true){
 				model.addJourney(new Journey(100,GUI.Destination,GUI.NoPassengers));
 				GUI.NewEntry = false;
+			
 			}
+			 	
+			
 		}
 	}
 

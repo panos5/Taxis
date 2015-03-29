@@ -23,6 +23,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
@@ -49,7 +50,7 @@ public class GUI extends JFrame implements ActionListener, taxisView {
 	public static String Destination;
 	public static int NoPassengers;
 	public static boolean NewEntry;
-   taxisController controller;
+    taxisController controller;
 	
 	
 	// Declaration of instance variables of panels
@@ -163,12 +164,14 @@ public class GUI extends JFrame implements ActionListener, taxisView {
 		 * an EmptyBorder to define spaces between the NORTH and the CENTER
 		 * panel
 		 */
-		northPanel.setBorder(new EmptyBorder(10, 15, 50, 15));
-		northPanel.setLayout(new FlowLayout());
+		northPanel.setBorder(new EmptyBorder(10, 15, 1, 1));
+		northPanel.setLayout(new GridLayout());
 		
 		for(int i=0; i<controller.getWorkersCount(); i++)
-			this.addWorkerStand("WORKER " + (i + 1));
-
+						
+			this.addWorkerStand("WORKER " + (i+1));	
+	
+		
 		// Adds northPanel to the NORTH layout of the window
 		add(northPanel, BorderLayout.NORTH);
 	}
@@ -378,21 +381,21 @@ public class GUI extends JFrame implements ActionListener, taxisView {
 		eastPanel.setBorder(new SoftBevelBorder(SoftBevelBorder.RAISED));
 	   
 		
-		speedLabel = new JLabel("Extra Workers");
-		speedHandler = new JSpinner(new SpinnerNumberModel(controller.getWorkersCount(), 0, 100, 1));
+		extraWorkersLabel = new JLabel("Extra Workers");
+		extraWorkers = new JSpinner(new SpinnerNumberModel(controller.getWorkersCount(), 1, 7, 1));
 		
-		speedHandler.addChangeListener( new ChangeListener() {
+		extraWorkers.addChangeListener( new ChangeListener() {
 		
 			
 			//@Override
 			public void stateChanged(ChangeEvent arg0) {
-				int diff = ((Integer)speedHandler.getValue()) - controller.getWorkersCount();
+				int diff = ((Integer)extraWorkers.getValue()) - controller.getWorkersCount();
 				if(diff>0) {// add stuff
-					controller.setWorkersCount((Integer)speedHandler.getValue());
+					controller.setWorkersCount((Integer)extraWorkers.getValue());
 					for(int i=0; i<diff; i++)
 						addWorkerStand("WORKER " + (controller.getWorkersCount() + 1));
 				} else if(diff<0) {//remove stuff
-					controller.setWorkersCount((Integer)speedHandler.getValue());
+					controller.setWorkersCount((Integer)extraWorkers.getValue());
 					for(int i=0; i<-diff; i++) {
 						northPanel.remove(stands.get(stands.size()-1));
 						stands.remove(stands.size()-1);
@@ -406,21 +409,21 @@ public class GUI extends JFrame implements ActionListener, taxisView {
 			
 		});
 		
-		eastPanel.add(speedLabel);
-		eastPanel.add(speedHandler);
-		
-		JLabel extraWorkersLabel= new JLabel("Speed Modification");
 		eastPanel.add(extraWorkersLabel);
-		JSpinner extraWorkers=new JSpinner(new SpinnerNumberModel(1000, 1000, 10000, 500));
-		extraWorkers.addChangeListener(new ChangeListener() {
+		eastPanel.add(extraWorkers);
+		
+		JLabel speedLabel= new JLabel("Speed Modification");
+		eastPanel.add(speedLabel);
+		JSpinner speedHandler=new JSpinner(new SpinnerNumberModel(1000, 1000, 10000, 1000));
+		speedHandler.addChangeListener(new ChangeListener() {
 			
 			//@Override
 			public void stateChanged(ChangeEvent e) {
-				controller.setTimerCount((Integer) extraWorkers.getValue());
+				controller.setTimerCount((Integer) speedHandler.getValue());
 			}
 		});
 		
-		eastPanel.add(extraWorkers);
+		eastPanel.add(speedHandler);
 
 
 		GridBagConstraints b = new GridBagConstraints();
@@ -465,11 +468,91 @@ public class GUI extends JFrame implements ActionListener, taxisView {
 
 		}
 		
-if (e.getSource() == submit){
+		
+		//Actions relevant to submit button
+		if (e.getSource() == submit) {
+
+			/*
+			 * Checks after submitting the form if both fields are empty.if this is the case 
+			 * user gets a warning message saying that he has two provide proper values to
+			 * both text fields.Also a red border in each field is displayed to show the empty boxes.
+			 */
+			if ((passengersText.getText().trim().equals(""))
+					&& destinationsText.getText().trim().equals(""))
+
+			{
+
+				JOptionPane.showMessageDialog(centerPanel,
+						"Please provide a destination and the number of passengers",
+						"WARNING!!!!",
+						JOptionPane.ERROR_MESSAGE);	
+				
+				passengersText.setBorder(BorderFactory.createLineBorder(Color.RED, 2));
+				destinationsText.setBorder(BorderFactory.createLineBorder(Color.RED, 2));
+				
+				
+			}
+
+			/*
+			 * if the text field responsible for passengers values is empty
+			 * user gets a warning message saying that he has to provide a proper value to
+			 * that text field.Also a red border around the field is displayed
+			 */
 			
-			NoPassengers = Integer.parseInt(passengersText.getText());
-			Destination = destinationsText.getText();
-			NewEntry = true;
+			else if (passengersText.getText().trim().equals("")) {
+
+				JOptionPane.showMessageDialog(centerPanel,
+						"Please provide a number of passengers",
+						"WARNING!!!!",
+						JOptionPane.ERROR_MESSAGE);
+
+				destinationsText.setBorder(BorderFactory.createLineBorder(Color.WHITE, 1));
+				passengersText.setBorder(BorderFactory.createLineBorder(Color.RED, 2));
+				
+			}
+
+			
+			
+			/*
+			 * if the text field responsible for the destination values is empty
+			 * user gets a warning message saying that he has to provide a proper value to
+			 * the specific text field.Also a red border around the field is displayed
+			 */	
+			else if (destinationsText.getText().trim().equals(""))
+
+			{
+				JOptionPane.showMessageDialog(centerPanel,
+						"Please provide a destination",
+						"WARNING!!!!",
+						JOptionPane.ERROR_MESSAGE);
+				
+				    passengersText.setBorder(BorderFactory.createLineBorder(Color.WHITE, 1));
+					destinationsText.setBorder(BorderFactory.createLineBorder(Color.RED, 2));
+
+			}
+
+			/*
+			 * if both fields have values, a new entry is inserted into the list of passengesQueue
+			 * and the user gets an information message saying that has registered the form properly.
+			 */
+			
+			else
+
+			{
+
+				NoPassengers = Integer.parseInt(passengersText.getText());
+				Destination = destinationsText.getText();
+				NewEntry = true;
+				JOptionPane.showMessageDialog(centerPanel,
+						"Registration completed.Thank you.A taxi will be with you soon!!");
+				passengersText.setText("");
+				destinationsText.setText("");
+				passengersText.setBorder(BorderFactory.createLineBorder(Color.WHITE, 0));
+				destinationsText.setBorder(BorderFactory.createLineBorder(Color.WHITE, 0));
+				
+
+			}
+
 		}
 
 	}
@@ -484,13 +567,13 @@ if (e.getSource() == submit){
 		if(i != 0)
 			taxis = taxis.substring(0, taxis.length()-1);
 		taxisQueue.setText(taxis);
-		taxisCounter.setText("" + model.taxisCount());
+		passengersCounter.setText("" + model.taxisCount());
 		for(i=0; i<model.journeyCount(); i++)
 			journeys += model.getJourney(i).getDestination() + ", " + model.getJourney(i).getPassengers() + "\n";
 		if(i != 0)
 			journeys = journeys.substring(0, journeys.length()-1);
 		passengersQueue.setText(journeys);
-		passengersCounter.setText("" + model.journeyCount());
+		taxisCounter.setText("" + model.journeyCount());
 	}
 	
 	//@Override
