@@ -141,14 +141,14 @@ public class taxisController implements Runnable, ModelListener {
 			if(j != null && t != null) {
 				j.setTaxi(t);
 				model.addPairedJourney(j);
-				//Using character '\1' where a space or a '\n' should be will enable us to parse the string easily afterwards
+				//Using character '\1' where a space or a '\n' should  will enable us to parse the string easily afterwards
 				s = "W" + (workerID+1) + ":\1DESTINATION: " + j.getDestination() + "\1PASSENGERS:\t" + j.getPassengers() + "\1Taxi:\t" + t.getID();
 			} else if(j == null && t == null) {
 				s = "W" + (workerID+1) + ": Closing!";
 			} else if(j == null) {
 				s = "W" + (workerID+1) + ": No more passengers";
 			} else {//t == null
-				s = "W" + workerID + ": No more taxis";
+				s = "W" + (workerID+1) + ": No more taxis";
 			}
 			
 			

@@ -271,8 +271,8 @@ public class GUI extends JFrame implements ActionListener, taxisView {
 		 * All components of southPanel initialized and layout set to FlowLayout
 		 */
 		southPanel.setLayout(new FlowLayout());
-		startButton = new JButton("Start");
-		stopButton = new JButton("Stop");
+		startButton = new JButton("Start/Resume");
+		stopButton = new JButton("Stop/Pause");
 
 		
 		/*
