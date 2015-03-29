@@ -1,7 +1,13 @@
 package gui;
 
 /**
- * marina, panagiotis
+ * @authors: Filiotis Panagiotis - H00203394 (graphical part)
+ *           Goupiou Marina - H00199564 (functionality, connections, etc.)
+ *           
+ *           
+ *           Paparisteidis Georgios - H00202663 (relevant to extension: more passenger groups can be added during simulation) 
+ *           Fytrakis Emmanouil - H00202650 (the same extension)
+ *           
  */
 import java.awt.BorderLayout;
 import java.awt.Color;

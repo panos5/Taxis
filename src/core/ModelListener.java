@@ -1,6 +1,7 @@
 /**
  * 
- * @authors: marina, panos
+ * @authors: Goupiou Marina - H00199564
+ *           Filiotis Panagiotis - H00203394
  *
  */
 package core;

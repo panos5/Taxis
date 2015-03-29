@@ -1,6 +1,10 @@
 /**
  * 
- * @author marina
+ * @authors: Goupiou Marina - H00199564
+ *           Filiotis Panagiotis - H00203394
+ *           
+ *           Paparisteidis Georgios - H00202663 (extension: more passenger groups can be added during simulation) 
+ *           Fytrakis Emmanouil - H00202650 (the same extension)
  *
  */
 

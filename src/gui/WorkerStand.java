@@ -1,5 +1,6 @@
 /**
- * @author: marina
+ * @authors: Goupiou Marina - H00199564
+ *           Filiotis Panagiotis - H00203394
  */
 
 package gui;

@@ -1,6 +1,6 @@
 /**
  * 
- * @author marina
+ * @author: Goupiou Marina - H00199564
  *
  */
 
